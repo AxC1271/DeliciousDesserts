@@ -1,0 +1,30 @@
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 1;
+    align-items: center;
+}
+
+.name {
+    margin-left: 5vw;
+    font-size: 32px;
+    color: white;
+    font-family: 'Playwrite IT Moderna';
+    font-weight: 24px;
+}
+
+.options {
+    font-family: 'Playwrite IT Moderna';
+    color: white;
+    text-decoration: underline;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 5vw;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.options:hover {
+    transform: scale(1.1);
+    color: #CBC3E3;
+}
