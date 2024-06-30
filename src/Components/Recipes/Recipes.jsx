@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import {
   collection,
   getDocs,
   addDoc,
   deleteDoc,
   doc,
-} from 'firebase/firestore'
-import { db } from '../Firebase/firebase'
-import Cake from './Images/CutePixelCakes.png'
-import BananaBread from './Images/BananaBread.png'
-import ChocolateChip from './Images/ChocolateChipCookies.png'
-import RecipeFormModal from './RecipeFormModal'
-import './Recipes.css'
+} from "firebase/firestore";
+import { db } from "../Firebase/firebase";
+import Cake from "./Images/CutePixelCakes.png";
+import BananaBread from "./Images/BananaBread.png";
+import ChocolateChip from "./Images/ChocolateChipCookies.png";
+import RecipeFormModal from "./RecipeFormModal";
+import "./Recipes.css";
 
 const defaultRecipes = [
   {
@@ -68,74 +68,78 @@ const defaultRecipes = [
     ],
     isDefault: true,
   },
-]
+];
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState(defaultRecipes) // Initialize with defaultRecipes
-  const [isNewFormOn, setIsNewFormOn] = useState(false)
-  const recipeRefs = useRef({})
+  const [recipes, setRecipes] = useState([]); // Initialize with an empty array
+  const [isNewFormOn, setIsNewFormOn] = useState(false);
+  const recipeRefs = useRef({});
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "recipes"))
-        const recipesList = querySnapshot.docs.map((doc) => ({
+        const querySnapshot = await getDocs(collection(db, "recipes"));
+        const fetchedRecipes = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }))
-        setRecipes(recipesList.length > 0 ? recipesList : defaultRecipes)
+        }));
+        // Filter out default recipes from fetched recipes
+        const userAddedRecipes = fetchedRecipes.filter(
+          (recipe) => !recipe.isDefault
+        );
+        setRecipes([...defaultRecipes, ...userAddedRecipes]);
       } catch (error) {
-        console.error("Error fetching recipes:", error)
+        console.error("Error fetching recipes:", error);
         // You can choose to handle error state or logging here
       }
-    }
-    fetchRecipes() // Fetch recipes when component mounts
-  }, [])
+    };
+    fetchRecipes(); // Fetch recipes when component mounts
+  }, []);
 
   const addRecipe = async (newRecipe) => {
     try {
       const docRef = await addDoc(collection(db, "recipes"), newRecipe)
       console.log("Document written with ID: ", docRef.id)
       
-      // Update local state with the new recipe
+      // Update local state with the new recipe, prepend it
       const recipeWithId = { id: docRef.id, ...newRecipe }
-      setRecipes(prevRecipes => [...prevRecipes, recipeWithId])
+      setRecipes(prevRecipes => [recipeWithId, ...prevRecipes])
     } catch (error) {
       console.error("Error adding recipe:", error)
     }
   }
-  
+
   const removeRecipe = async (id) => {
     try {
-      await deleteDoc(doc(db, "recipes", id))
-      setRecipes(recipes.filter((recipe) => recipe.id !== id))
+      await deleteDoc(doc(db, "recipes", id));
+      setRecipes(recipes.filter((recipe) => recipe.id !== id));
     } catch (error) {
-      console.error("Error removing recipe:", error)
+      console.error("Error removing recipe:", error);
     }
-  }
+  };
 
   const resetRecipes = async () => {
     try {
-      const recipeCollection = collection(db, "recipes")
-      const querySnapshot = await getDocs(recipeCollection)
+      const recipeCollection = collection(db, "recipes");
+      const querySnapshot = await getDocs(recipeCollection);
       querySnapshot.forEach(async (doc) => {
-        await deleteDoc(doc.ref)
-      })
+        await deleteDoc(doc.ref);
+      });
       defaultRecipes.forEach(async (recipe) => {
-        await addDoc(recipeCollection, recipe)
-      })
-      setRecipes(defaultRecipes)
+        await addDoc(recipeCollection, recipe);
+      });
+      setRecipes(defaultRecipes);
     } catch (error) {
-      console.error("Error resetting recipes:", error)
+      console.error("Error resetting recipes:", error);
     }
-  }
+  };
 
   const scrollToRecipe = (id) => {
-    const recipeElement = recipeRefs.current[id]
+    const recipeElement = recipeRefs.current[id];
     if (recipeElement) {
-      recipeElement.scrollIntoView({ behavior: "smooth" })
+      recipeElement.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   return (
     <React.Fragment>
