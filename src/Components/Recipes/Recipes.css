@@ -16,6 +16,7 @@
     margin: 20px auto;
     display: flex;
     flex-direction: column;
+    padding: 40px 0;
 }
 
 .cake-logo {
@@ -65,4 +66,41 @@
     line-height: 50px;
     color: #9D8189;
     cursor: pointer;
+}
+
+.remove-recipe {
+    border: none;
+    border-radius: 20px;
+    width: 60vw;
+    height: 10vh;
+    margin: auto;
+    font-family: 'Playwrite IT Moderna';
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.remove-recipe:hover {
+    background-color: #D8E2DC;
+}
+
+.add-recipe-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.add-recipe {
+    margin: auto;
+    border: none;
+    border-radius: 20px;
+    width: 60vw;
+    height: 10vh;
+    font-family: 'Playwrite IT Moderna';
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.add-recipe:hover {
+    background-color: #D8E2DC;
 }
