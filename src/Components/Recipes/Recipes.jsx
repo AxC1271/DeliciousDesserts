@@ -95,7 +95,11 @@ const Recipes = () => {
   const addRecipe = async (newRecipe) => {
     try {
       const docRef = await addDoc(collection(db, "recipes"), newRecipe)
-      setRecipes([...recipes, { id: docRef.id, ...newRecipe }])
+      console.log("Document written with ID: ", docRef.id)
+      
+      // Update local state with the new recipe
+      const recipeWithId = { id: docRef.id, ...newRecipe }
+      setRecipes(prevRecipes => [...prevRecipes, recipeWithId])
     } catch (error) {
       console.error("Error adding recipe:", error)
     }
