@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import "./RecipeFormModal.css";
+import React, { useState } from 'react'
+import './RecipeFormModal.css'
 
 const RecipeFormModal = ({ onClose, onSave }) => {
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [title, setTitle] = useState("")
+  const [image, setImage] = useState("")
+  const [ingredients, setIngredients] = useState("")
+  const [instructions, setInstructions] = useState("")
 
   const handleSave = () => {
     onSave({
@@ -13,9 +13,9 @@ const RecipeFormModal = ({ onClose, onSave }) => {
       image,
       ingredients: ingredients.split("\n"),
       instructions: instructions.split("\n"),
-    });
-    onClose();
-  };
+    })
+    onClose()
+  }
 
   return (
     <div className="modal-background show">
@@ -58,7 +58,7 @@ const RecipeFormModal = ({ onClose, onSave }) => {
         <button onClick={onClose}>Cancel</button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RecipeFormModal;
+export default RecipeFormModal

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import Cake from "./Images/CutePixelCakes.png";
-import BananaBread from "./Images/BananaBread.png";
-import ChocolateChip from "./Images/ChocolateChipCookies.png";
-import RecipeFormModal from "./RecipeFormModal";
-import "./Recipes.css";
+import React, { useState, useEffect } from 'react'
+import Cake from './Images/CutePixelCakes.png'
+import BananaBread from './Images/BananaBread.png'
+import ChocolateChip from './Images/ChocolateChipCookies.png'
+import RecipeFormModal from './RecipeFormModal'
+import './Recipes.css'
 
 const defaultRecipes = [
   {
@@ -58,37 +58,26 @@ const defaultRecipes = [
       "Enjoy!",
     ],
   },
-];
+]
 
 const Recipes = ({ scrollToPercentage }) => {
-  const [recipes, setRecipes] = useState(defaultRecipes);
-  const [isNewFormOn, setIsNewFormOn] = useState(false);
+  const [recipes, setRecipes] = useState(() => {
+    const storedRecipes = localStorage.getItem("recipes")
+    return storedRecipes ? JSON.parse(storedRecipes) : defaultRecipes
+  })
+  const [isNewFormOn, setIsNewFormOn] = useState(false)
 
-  // Load recipes from local storage
-  useEffect(() => {
-    const storedRecipes = localStorage.getItem("recipes");
-    if (storedRecipes) {
-      setRecipes(JSON.parse(storedRecipes));
-    }
-  }, []);
-
-  // Save recipes to local storage whenever recipes state changes
   useEffect(() => {
     localStorage.setItem("recipes", JSON.stringify(recipes));
-  }, [recipes]);
+  }, [recipes])
 
-  // Function to add a recipe
   const addRecipe = (newRecipe) => {
-    setRecipes([...recipes, { id: recipes.length + 1, ...newRecipe }]);
-  };
+    setRecipes([...recipes, { id: recipes.length + 1, ...newRecipe }])
+  }
 
-  // Function to remove a recipe
   const removeRecipe = (id) => {
-    setRecipes(recipes.filter((recipe) => recipe.id !== id));
-  };
-
-  // Debugging console logs
-  console.log("isNewFormOn:", isNewFormOn);
+    setRecipes(recipes.filter((recipe) => recipe.id !== id))
+  }
 
   return (
     <React.Fragment>
@@ -155,7 +144,8 @@ const Recipes = ({ scrollToPercentage }) => {
         />
       )}
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Recipes;
+export default Recipes
+
