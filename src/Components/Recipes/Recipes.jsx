@@ -11,7 +11,7 @@ import Cake from './Images/CutePixelCakes.png'
 import BananaBread from './Images/BananaBread.png'
 import ChocolateChip from './Images/ChocolateChipCookies.png'
 import RecipeFormModal from './RecipeFormModal'
-import './Recipes.css'
+import "./Recipes.css";
 
 const defaultRecipes = [
   {
@@ -68,10 +68,10 @@ const defaultRecipes = [
     ],
     isDefault: true,
   },
-];
+]
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState([])
+  const [recipes, setRecipes] = useState(defaultRecipes) // Initialize with defaultRecipes
   const [isNewFormOn, setIsNewFormOn] = useState(false)
   const recipeRefs = useRef({})
 
@@ -86,10 +86,10 @@ const Recipes = () => {
         setRecipes(recipesList.length > 0 ? recipesList : defaultRecipes)
       } catch (error) {
         console.error("Error fetching recipes:", error)
-        setRecipes(defaultRecipes); // Set default recipes on error
+        // You can choose to handle error state or logging here
       }
     }
-    fetchRecipes()
+    fetchRecipes() // Fetch recipes when component mounts
   }, [])
 
   const addRecipe = async (newRecipe) => {
