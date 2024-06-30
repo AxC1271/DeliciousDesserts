@@ -8,34 +8,52 @@ const RecipeFormModal = ({ onClose, onSave }) => {
   const [instructions, setInstructions] = useState("");
 
   const handleSave = () => {
-    const newRecipe = {
+    onSave({
       title,
       image,
       ingredients: ingredients.split("\n"),
       instructions: instructions.split("\n"),
-    };
-    onSave(newRecipe);
+    });
     onClose();
   };
 
   return (
-    <div className="modal-background">
+    <div className="modal-background show">
       <div className="modal">
         <h2>Add New Recipe</h2>
-        <label>Title:</label>
-        <input value={title} onChange={(e) => setTitle(e.target.value)} />
-        <label>Image URL:</label>
-        <input value={image} onChange={(e) => setImage(e.target.value)} />
-        <label>Ingredients (one per line):</label>
-        <textarea
-          value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
-        />
-        <label>Instructions (one per line):</label>
-        <textarea
-          value={instructions}
-          onChange={(e) => setInstructions(e.target.value)}
-        />
+        <label>
+          Title:
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Image URL:
+          <input
+            type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+        </label>
+        <label>
+          Ingredients (one per line):
+          <textarea
+            value={ingredients}
+            onChange={(e) => setIngredients(e.target.value)}
+            required
+          ></textarea>
+        </label>
+        <label>
+          Instructions (one per line):
+          <textarea
+            value={instructions}
+            onChange={(e) => setInstructions(e.target.value)}
+            required
+          ></textarea>
+        </label>
         <button onClick={handleSave}>Save</button>
         <button onClick={onClose}>Cancel</button>
       </div>

@@ -87,6 +87,9 @@ const Recipes = ({ scrollToPercentage }) => {
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
   };
 
+  // Debugging console logs
+  console.log("isNewFormOn:", isNewFormOn);
+
   return (
     <React.Fragment>
       <div className="table-of-contents">

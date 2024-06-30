@@ -44,11 +44,12 @@
 
 .modal input,
 .modal textarea {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-family: 'Playwrite IT Moderna';
 }
 
 .modal button {
@@ -57,16 +58,23 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Playwrite IT Moderna";
 }
 
 .modal button:first-of-type {
   background-color: #4CAF50;
   color: white;
+  margin-right: auto;
 }
 
 .modal button:last-of-type {
   background-color: #f44336;
   color: white;
+}
+
+label {
+  font-family: "Playwrite IT Moderna";
+  color: #9D8189;
 }
 
   
