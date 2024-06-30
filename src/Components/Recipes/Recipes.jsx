@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Cake from './Images/CutePixelCakes.png'
-import BananaBread from './Images/BananaBread.png'
-import ChocolateChip from './Images/ChocolateChipCookies.png'
-import RecipeFormModal from './RecipeFormModal'
+import React, { useState, useEffect, useRef } from 'react';
+import Cake from './Images/CutePixelCakes.png';
+import BananaBread from './Images/BananaBread.png';
+import ChocolateChip from './Images/ChocolateChipCookies.png';
+import RecipeFormModal from './RecipeFormModal';
 import './Recipes.css';
 
 const defaultRecipes = [
@@ -30,6 +30,7 @@ const defaultRecipes = [
       "Bake in the oven for at least 50 minutes to an hour",
       "Enjoy!",
     ],
+    isDefault: true,
   },
   {
     id: 2,
@@ -57,10 +58,11 @@ const defaultRecipes = [
       "Bake for 10-13 minutes or until cookies become a light golden color",
       "Enjoy!",
     ],
+    isDefault: true,
   },
-]
+];
 
-const Recipes = () => {
+const Recipes = ({ scrollToPercentage }) => {
   const [recipes, setRecipes] = useState(() => {
     const storedRecipes = localStorage.getItem("recipes");
     return storedRecipes ? JSON.parse(storedRecipes) : defaultRecipes;
@@ -73,11 +75,15 @@ const Recipes = () => {
   }, [recipes]);
 
   const addRecipe = (newRecipe) => {
-    setRecipes([...recipes, { id: recipes.length + 1, ...newRecipe }]);
+    setRecipes([...recipes, { id: recipes.length + 1, isDefault: false, ...newRecipe }]);
   };
 
   const removeRecipe = (id) => {
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
+  };
+
+  const resetRecipes = () => {
+    setRecipes(defaultRecipes);
   };
 
   const scrollToRecipe = (id) => {
@@ -131,18 +137,23 @@ const Recipes = () => {
                 </li>
               ))}
             </ol>
-            <button
-              className="remove-recipe"
-              onClick={() => removeRecipe(recipe.id)}
-            >
-              Remove Recipe
-            </button>
+            {!recipe.isDefault && (
+              <button
+                className="remove-recipe"
+                onClick={() => removeRecipe(recipe.id)}
+              >
+                Remove Recipe
+              </button>
+            )}
           </div>
         </div>
       ))}
       <div className="add-recipe-container">
         <button className="add-recipe" onClick={() => setIsNewFormOn(true)}>
           Add New Recipe
+        </button>
+        <button className="add-recipe" onClick={resetRecipes}>
+          Reset to Default Recipes
         </button>
       </div>
       {isNewFormOn && (
@@ -156,3 +167,4 @@ const Recipes = () => {
 };
 
 export default Recipes;
+
