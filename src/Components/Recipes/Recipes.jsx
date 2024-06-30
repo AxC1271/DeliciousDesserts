@@ -197,7 +197,7 @@ const Recipes = () => {
           Add New Recipe
         </button>
         <button className="add-recipe" onClick={resetRecipes}>
-          Reset to Default Recipes
+          Our Recommended Recipes
         </button>
       </div>
       {isNewFormOn && (
