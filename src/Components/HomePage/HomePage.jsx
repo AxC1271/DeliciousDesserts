@@ -20,7 +20,7 @@ const HomePage = () => {
                 cook to dabble in! Feel free to explore this page
                 to explore different recipes you've never seen before!
                 This is a food blog site, where people can share their
-                recipes.
+                recipes.  
             </p>
         </div>
     )

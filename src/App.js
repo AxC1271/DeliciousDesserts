@@ -5,14 +5,6 @@ import HomePage from './Components/HomePage/HomePage'
 import Recipes from './Components/Recipes/Recipes'
 
 const App = () => {
-    const scrollToPercentage = (percentage) => {
-        const scrollPosition = document.documentElement.scrollHeight * (percentage / 100)
-        window.scrollTo({
-          top: scrollPosition,
-          behavior: 'smooth'
-        })
-      }
-
     const [page, setPage] = useState("Home")
 
     if (page === "Home") {
@@ -27,7 +19,7 @@ const App = () => {
         return (
             <React.Fragment>
                 <Navbar setPage = {setPage} />
-                <Recipes scrollToPercentage = {scrollToPercentage} />
+                <Recipes />
             </React.Fragment>
         )
     }

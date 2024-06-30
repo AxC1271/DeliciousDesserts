@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Cake from './Images/CutePixelCakes.png'
 import BananaBread from './Images/BananaBread.png'
 import ChocolateChip from './Images/ChocolateChipCookies.png'
 import RecipeFormModal from './RecipeFormModal'
-import './Recipes.css'
+import './Recipes.css';
 
 const defaultRecipes = [
   {
@@ -60,24 +60,32 @@ const defaultRecipes = [
   },
 ]
 
-const Recipes = ({ scrollToPercentage }) => {
+const Recipes = () => {
   const [recipes, setRecipes] = useState(() => {
-    const storedRecipes = localStorage.getItem("recipes")
-    return storedRecipes ? JSON.parse(storedRecipes) : defaultRecipes
-  })
-  const [isNewFormOn, setIsNewFormOn] = useState(false)
+    const storedRecipes = localStorage.getItem("recipes");
+    return storedRecipes ? JSON.parse(storedRecipes) : defaultRecipes;
+  });
+  const [isNewFormOn, setIsNewFormOn] = useState(false);
+  const recipeRefs = useRef({});
 
   useEffect(() => {
     localStorage.setItem("recipes", JSON.stringify(recipes));
-  }, [recipes])
+  }, [recipes]);
 
   const addRecipe = (newRecipe) => {
-    setRecipes([...recipes, { id: recipes.length + 1, ...newRecipe }])
-  }
+    setRecipes([...recipes, { id: recipes.length + 1, ...newRecipe }]);
+  };
 
   const removeRecipe = (id) => {
-    setRecipes(recipes.filter((recipe) => recipe.id !== id))
-  }
+    setRecipes(recipes.filter((recipe) => recipe.id !== id));
+  };
+
+  const scrollToRecipe = (id) => {
+    const recipeElement = recipeRefs.current[id];
+    if (recipeElement) {
+      recipeElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <React.Fragment>
@@ -86,11 +94,11 @@ const Recipes = ({ scrollToPercentage }) => {
         <div className="underline"></div>
         <img src={Cake} alt="" className="cake-logo" />
         <ol>
-          {recipes.map((recipe, index) => (
+          {recipes.map((recipe) => (
             <li
               key={recipe.id}
               className="content"
-              onClick={() => scrollToPercentage((index + 1) * 12.5)}
+              onClick={() => scrollToRecipe(recipe.id)}
             >
               {recipe.title}
             </li>
@@ -98,7 +106,7 @@ const Recipes = ({ scrollToPercentage }) => {
         </ol>
       </div>
       {recipes.map((recipe) => (
-        <div key={recipe.id}>
+        <div key={recipe.id} ref={(el) => (recipeRefs.current[recipe.id] = el)}>
           <div className="line-container">
             <h2>{recipe.title}</h2>
             <div className="line"></div>
@@ -144,8 +152,7 @@ const Recipes = ({ scrollToPercentage }) => {
         />
       )}
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Recipes
-
+export default Recipes;
