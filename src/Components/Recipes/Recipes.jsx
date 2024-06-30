@@ -11,7 +11,7 @@ import Cake from './Images/CutePixelCakes.png'
 import BananaBread from './Images/BananaBread.png'
 import ChocolateChip from './Images/ChocolateChipCookies.png'
 import RecipeFormModal from './RecipeFormModal'
-import "./Recipes.css";
+import './Recipes.css'
 
 const defaultRecipes = [
   {
@@ -104,7 +104,7 @@ const Recipes = () => {
       console.error("Error adding recipe:", error)
     }
   }
-
+  
   const removeRecipe = async (id) => {
     try {
       await deleteDoc(doc(db, "recipes", id))
